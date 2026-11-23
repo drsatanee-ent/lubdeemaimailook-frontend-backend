@@ -54,3 +54,16 @@ HTML5, CSS3, vanilla JavaScript, browser localStorage, GitHub Pages (static host
 - [Technical documentation](docs/technical-documentation.md) — architecture, components, data flow, and setup
 - [Git workflow](docs/git-workflow.md) — branching, commits, pull requests, and deployment
 - [Manual testing guide](docs/testing-guide.md) — test scenarios and expected results (not a completed test report)
+
+## Thai SRBD-PSQ 22-item questionnaire (feature branch)
+This branch adds a Thai-language form based on the supplied Thai_SRBD_PSQ_Form.pdf with Yes / No / Don't know responses. The calculation is **Yes / (Yes + No)** when all 22 items have an explicit response and at least one is known. It corresponds to the form's **Yes / (22 − Don't know)** formula.
+
+- **Low screening risk:** score < 0.33.
+- **High screening risk (positive screen):** score ≥ 0.33.
+- **Unclassified:** unanswered responses, all Don't know, or any Don't know (additional conservative UI policy; an informational score may still display).
+- **No medium category.** The score is a screening indicator and is **not** OSA severity, a diagnosis, or a substitute for clinical assessment or polysomnography.
+- The questionnaire is not persisted or transmitted; demo-only synthetic data are required.
+
+Run automated scoring tests with `node --test tests/psq-scoring.test.cjs`. See [PSQ implementation notes](docs/psq-scoring-method.md).
+
+**Feature development is under review until merged into main and deployed.** Do not treat these files as proof of clinical validation or deployment.
