@@ -49,3 +49,8 @@ HTML5, CSS3, vanilla JavaScript, browser localStorage, GitHub Pages (static host
 
 ---
 **Project status:** Working static prototype source. GitHub Pages deployment requires enabling the Pages workflow in repository settings. No security audit, clinical validation, or production readiness is claimed.
+
+## Technical documentation and Git
+- [Technical documentation](docs/technical-documentation.md) — architecture, components, data flow, and setup
+- [Git workflow](docs/git-workflow.md) — branching, commits, pull requests, and deployment
+- [Manual testing guide](docs/testing-guide.md) — test scenarios and expected results (not a completed test report)
