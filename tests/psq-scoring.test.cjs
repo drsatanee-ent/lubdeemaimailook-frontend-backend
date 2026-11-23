@@ -12,10 +12,10 @@ test("seven yes of 22 is low",()=>{
 test("eight yes of 22 is high",()=>{
  const a=allNo();a.fill("yes",0,8);assert.equal(calculate(a).classification,"high");
 });
-test("exactly 0.33 is high",()=>{
- const a=Array(22).fill("unknown");a.fill("yes",0,33/3); // 11 yes, then nine no = 11/20 > 0.33
+test("unknown answers can yield a numeric positive screen but classification is withheld",()=>{
+ const a=Array(22).fill("unknown");a.fill("yes",0,11);
  a.fill("no",11,20);const r=calculate(a);
- assert.equal(r.classification,"unclassified");assert.equal(r.screen,"positive");
+ assert.equal(r.score,11/20);assert.equal(r.classification,"unclassified");assert.equal(r.screen,"positive");
 });
 test("don't know answer excludes denominator but prevents risk category",()=>{
  const a=allNo();a[0]="unknown";a[1]="yes";
