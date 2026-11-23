@@ -3,14 +3,14 @@
 A Thai-language, browser-based prototype for structured pediatric obstructive sleep apnea (OSA) risk-factor data collection.
 
 ## Live prototype
-After enabling GitHub Pages with **Settings → Pages → Build and deployment → Source: GitHub Actions**, the app will be available at:
+GitHub Pages is deployed at:
 
 `https://drsatanee-ent.github.io/lubdeemaimailook-frontend-backend/`
 
 The first deployment may take a few minutes after the workflow completes.
 
 ## What this prototype does
-- Captures a project code and age in months (no child's name is requested).
+- Collects age in years without a name or Demo ID.
 - Records five literature-derived risk factors as **Present / Absent / Not assessed**.
 - Shows data completeness and prevents incomplete data from being interpreted as “low risk”.
 - Saves demo assessments in the current browser's local storage.
@@ -66,4 +66,22 @@ This branch adds a Thai-language form based on the supplied Thai_SRBD_PSQ_Form.p
 
 Run automated scoring tests with `node --test tests/psq-scoring.test.cjs`. See [PSQ implementation notes](docs/psq-scoring-method.md).
 
-**Feature development is under review until merged into main and deployed.** Do not treat these files as proof of clinical validation or deployment.
+**The Thai SRBD-PSQ module is included in the deployed static prototype.** No clinical validation or production readiness is claimed.
+
+## Installable PWA (iPhone / Android)
+The site includes a web app manifest, offline app-shell service worker, and custom icon artwork. GitHub Pages generates PNG icons at deployment from the original design source `scripts/generate-icons.py`.
+
+- **iPhone:** Open the live site in Safari → Share → **Add to Home Screen** → Add.
+- **Android:** Open the live site in Chrome → menu (⋮) → **Install app** or **Add to Home screen** (availability varies by browser/device).
+- **Desktop:** Chrome or Edge may show an Install icon in the address bar.
+
+PWA installation is not App Store or Play Store distribution. The offline cache includes only the static app shell; questionnaire entries are not cached by the service worker. The existing five-factor demo may store **synthetic-only** records in browser localStorage. PWA data/storage can be different from the browser tab and may be cleared by the device.
+
+**Offline caveat:** Offline operation is available after a successful first online load and icon cache installation. Do not rely on offline access for clinical care. Changes may require closing and reopening the installed app after a new deployment.
+
+### PWA files
+- `manifest.webmanifest` — installation name, display mode, icons, and scope
+- `service-worker.js` — app-shell offline cache
+- `icons/app-icon.svg` — original source artwork
+- `scripts/generate-icons.py` — builds 192px, 512px, maskable, and Apple touch PNGs
+- `.github/workflows/pages.yml` — generates PNGs and deploys them with GitHub Pages

@@ -1,0 +1,38 @@
+{
+  "id": "./",
+  "name": "หลับดีไหมลูก? | Lub Dee Mai Look?",
+  "short_name": "หลับดีไหมลูก?",
+  "description": "ต้นแบบแบบสอบถามคัดกรองภาวะหยุดหายใจขณะหลับในเด็ก (ใช้ข้อมูลสมมติเท่านั้น)",
+  "lang": "th",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "background_color": "#f5f8fa",
+  "theme_color": "#0f766e",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

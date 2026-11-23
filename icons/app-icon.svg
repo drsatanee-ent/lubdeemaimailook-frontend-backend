@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="หลับดีไหมลูก? โลโก้พระจันทร์และเด็กนอนหลับ">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0f766e"/><stop offset="1" stop-color="#164e63"/></linearGradient></defs>
+<rect width="512" height="512" rx="112" fill="url(#bg)"/>
+<circle cx="323" cy="167" r="91" fill="#fff2c9"/><circle cx="363" cy="124" r="91" fill="#0f766e"/>
+<path d="M134 296c26-40 66-63 121-63 55 0 96 23 121 63" fill="none" stroke="#d2f5ed" stroke-width="20" stroke-linecap="round"/>
+<circle cx="253" cy="325" r="83" fill="#ffe0bd"/>
+<path d="M190 323q18 18 36 0m54 0q18 18 36 0" fill="none" stroke="#164e63" stroke-width="10" stroke-linecap="round"/>
+<path d="M225 364q29 22 57 0" fill="none" stroke="#b36b64" stroke-width="9" stroke-linecap="round"/>
+<path d="M153 398q100-44 204 0v40H153z" fill="#b6eee1"/>
+<circle cx="129" cy="143" r="8" fill="#fff2c9"/><circle cx="404" cy="280" r="7" fill="#fff2c9"/>
+</svg>
