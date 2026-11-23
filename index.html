@@ -25,6 +25,7 @@ button{border:0;border-radius:10px;padding:11px 15px;font:inherit;font-weight:70
 .footer{color:var(--muted);font-size:12px;text-align:center;padding:10px 0 0}
 @media(max-width:800px){.grid{grid-template-columns:1fr}.card{padding:16px}.factor-top{display:block}.factor-or{display:inline-block;margin-top:6px}}
 </style>
+<link rel="stylesheet" href="psq.css">
 </head>
 <body>
 <header><div class="wrap">
@@ -58,6 +59,7 @@ button{border:0;border-radius:10px;padding:11px 15px;font:inherit;font-weight:70
       </section>
     </aside>
   </div>
+  <div id="psqMount"></div>
   <div class="footer">Lub Dee Mai Look? · Prototype v0.1 · HTML / CSS / JavaScript · Local browser storage</div>
 </main>
 <script>
@@ -121,4 +123,6 @@ $("clearBtn").addEventListener("click",()=>{if(confirm("ลบข้อมูล
 $("assessmentForm").addEventListener("change",updateLive);
 renderFactors();renderHistory();updateLive();
 </script>
+<script src="psq-scoring.js"></script>
+<script src="psq-app.js"></script>
 </body></html>
