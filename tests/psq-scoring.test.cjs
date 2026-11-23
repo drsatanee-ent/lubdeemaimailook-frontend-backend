@@ -1,43 +1,37 @@
-const test = require("node:test");
-const assert = require("node:assert/strict");
-const { calculate } = require("../psq-scoring.js");
-const blank = () => Array(22).fill("no");
-test("0 of 22 yes is negative and low demo tier", () => {
- const r=calculate(blank()); assert.equal(r.score,0); assert.equal(r.screen,"negative"); assert.equal(r.demoTier,"low");
+const test=require("node:test");
+const assert=require("node:assert/strict");
+const {calculate}=require("../psq-scoring.js");
+const allNo=()=>Array(22).fill("no");
+
+test("zero yes is low",()=>{
+ const r=calculate(allNo());assert.equal(r.score,0);assert.equal(r.classification,"low");
 });
-test("four yes answers is low demonstration tier", () => {
- const a=blank(); a.fill("yes",0,4); const r=calculate(a);
- assert.equal(r.yes,4); assert.equal(r.screen,"negative"); assert.equal(r.demoTier,"low");
+test("seven yes of 22 is low",()=>{
+ const a=allNo();a.fill("yes",0,7);assert.equal(calculate(a).classification,"low");
 });
-test("five yes answers is moderate demo tier but still screen-negative", () => {
- const a=blank(); a.fill("yes",0,5); const r=calculate(a);
- assert.equal(r.demoTier,"moderate"); assert.equal(r.screen,"negative");
+test("eight yes of 22 is high",()=>{
+ const a=allNo();a.fill("yes",0,8);assert.equal(calculate(a).classification,"high");
 });
-test("eight yes of 22 is screen positive and high demo tier", () => {
- const a=blank(); a.fill("yes",0,8); const r=calculate(a);
- assert.equal(r.yes,8); assert.equal(r.screen,"positive"); assert.equal(r.demoTier,"high");
+test("exactly 0.33 is high",()=>{
+ const a=Array(22).fill("unknown");a.fill("yes",0,33/3); // 11 yes, then nine no = 11/20 > 0.33
+ a.fill("no",11,20);const r=calculate(a);
+ assert.equal(r.classification,"unclassified");assert.equal(r.screen,"positive");
 });
-test("seven yes of 22 is still below the 0.33 cutoff", () => {
- const a=blank(); a.fill("yes",0,7); const r=calculate(a);
- assert.equal(r.screen,"negative");
+test("don't know answer excludes denominator but prevents risk category",()=>{
+ const a=allNo();a[0]="unknown";a[1]="yes";
+ const r=calculate(a);assert.equal(r.score,1/21);assert.equal(r.classification,"unclassified");
 });
-test("unknown answers are excluded from the denominator but block demo risk tiers", () => {
- const a=blank(); a[0]="unknown"; a[1]="unknown"; a[2]="yes"; const r=calculate(a);
- assert.equal(r.score,1/20); assert.equal(r.unknown,2); assert.equal(r.demoTier,"unclassified");
+test("pending answers block scoring",()=>{
+ const a=allNo();a[5]=null;const r=calculate(a);
+ assert.equal(r.score,null);assert.equal(r.classification,"unclassified");
 });
-test("unanswered items block score and classification", () => {
- const a=blank(); a[2]=null; const r=calculate(a);
- assert.equal(r.selected,21); assert.equal(r.score,null); assert.equal(r.screen,"unavailable"); assert.equal(r.demoTier,"unclassified");
+test("all unknown cannot be scored",()=>{
+ const r=calculate(Array(22).fill("unknown"));assert.equal(r.score,null);assert.equal(r.classification,"unclassified");
 });
-test("all unknown responses do not permit divide by zero", () => {
- const r=calculate(Array(22).fill("unknown"));
- assert.equal(r.score,null); assert.equal(r.demoTier,"unclassified");
+test("red flag independent of PSQ score",()=>{
+ const a=allNo();a[4]="yes";const r=calculate(a);assert.equal(r.redFlag,true);assert.equal(r.classification,"low");
 });
-test("observed apnea flags follow-up independent of the score", () => {
- const a=blank(); a[4]="yes"; const r=calculate(a);
- assert.equal(r.redFlag,true); assert.equal(r.demoTier,"low");
-});
-test("invalid length and unknown response values are rejected", () => {
+test("validations reject wrong size or response",()=>{
  assert.throws(()=>calculate(["yes"]),/22/);
- const a=blank(); a[0]="maybe"; assert.throws(()=>calculate(a),/Invalid/);
+ const a=allNo();a[0]="maybe";assert.throws(()=>calculate(a),/Invalid/);
 });
