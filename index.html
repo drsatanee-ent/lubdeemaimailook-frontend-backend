@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0f766e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="หลับดีไหมลูก?">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="./icons/app-icon.svg">
 <meta name="description" content="Lub Dee Mai Look? Pediatric OSA screening prototype">
 <title>หลับดีไหมลูก? | Pediatric OSA Screening</title>
 <style>
@@ -124,4 +131,9 @@ renderFactors();renderHistory();updateLive();
 </script>
 <script src="psq-scoring.js"></script>
 <script src="psq-app.js"></script>
+<script>
+if ("serviceWorker" in navigator && location.protocol === "https:") {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch(err => console.warn("PWA offline mode unavailable", err)));
+}
+</script>
 </body></html>
