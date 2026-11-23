@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0f766e">
+<meta name="description" content="Lub Dee Mai Look? Pediatric OSA screening prototype">
+<title>หลับดีไหมลูก? | Pediatric OSA Screening</title>
+<style>
+:root{--ink:#17324d;--muted:#64748b;--teal:#0f766e;--teal2:#115e59;--mint:#e8f5f2;--line:#dbe5ea;--bg:#f5f8fa;--white:#fff;--amber:#fff7e6;--red:#fff0ee;--shadow:0 12px 32px rgba(20,50,70,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55}
+header{background:linear-gradient(120deg,#0f766e,#164e63);color:#fff;padding:30px 18px 26px}
+.wrap{max-width:1050px;margin:auto;padding:0 16px}.brand{display:flex;gap:14px;align-items:center}.logo{width:54px;height:54px;border-radius:17px;background:#ffffff20;display:grid;place-items:center;font-size:28px}.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.85}.brand h1{margin:2px 0;font-size:clamp(24px,4vw,34px)}.brand p{margin:0;opacity:.88}
+.header-note{margin:20px 0 0;padding:11px 14px;border:1px solid #ffffff50;border-radius:12px;background:#ffffff12;font-size:13px}
+main{padding:24px 0 56px}.notice{border:1px solid #f1d08a;background:var(--amber);border-radius:14px;padding:14px 16px;margin-bottom:20px;font-size:14px}.notice strong{display:block;margin-bottom:3px}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:start}.card{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow);margin-bottom:18px}.card h2{font-size:19px;margin:0 0 4px}.sub{color:var(--muted);font-size:13px;margin:0 0 18px}
+label{display:block;font-weight:650;font-size:14px;margin-bottom:6px}.field{margin-bottom:15px}input[type=text],input[type=number]{width:100%;padding:11px 12px;border:1px solid #cbd5e1;border-radius:10px;font:inherit;background:#fff;color:var(--ink)}input:focus,button:focus-visible{outline:3px solid #99d6cc;outline-offset:2px}
+.factor{border:1px solid var(--line);border-radius:13px;padding:13px;margin:10px 0}.factor-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.factor-name{font-weight:700}.factor-or{font-size:12px;color:var(--teal);white-space:nowrap;background:var(--mint);padding:3px 8px;border-radius:999px}.factor-desc{font-size:12px;color:var(--muted);margin:3px 0 11px}
+.choices{display:flex;gap:8px;flex-wrap:wrap}.choice{display:flex;align-items:center;gap:6px;border:1px solid #d7e1e7;border-radius:9px;padding:7px 10px;font-size:13px;font-weight:500;cursor:pointer}.choice input{accent-color:var(--teal)}
+.consent{display:flex;align-items:flex-start;gap:9px;background:#f7fafc;border-radius:10px;padding:12px;font-size:13px;margin:14px 0}.consent input{margin-top:4px;accent-color:var(--teal)}
+button{border:0;border-radius:10px;padding:11px 15px;font:inherit;font-weight:700;cursor:pointer}.primary{background:var(--teal);color:#fff}.primary:hover{background:var(--teal2)}.secondary{background:#e7eef2;color:var(--ink)}.danger{background:#fff0ee;color:#a33125}.small{padding:7px 10px;font-size:12px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.progress{height:9px;background:#e9eff2;border-radius:99px;overflow:hidden;margin:9px 0}.progress span{display:block;height:100%;background:var(--teal);width:0;transition:width .2s}.complete{font-size:13px;color:var(--muted)}
+.result{padding:14px;border-radius:12px;background:var(--mint);border:1px solid #b9ded6;margin-top:14px;font-size:14px}.result.incomplete{background:var(--amber);border-color:#f1d08a}
+.list{display:flex;flex-direction:column;gap:10px}.record{border:1px solid var(--line);border-radius:12px;padding:12px}.record-head{display:flex;justify-content:space-between;gap:10px}.record-title{font-weight:700}.meta{font-size:12px;color:var(--muted)}.tag{font-size:11px;padding:3px 8px;border-radius:99px;background:#edf2f6;white-space:nowrap}.empty{color:var(--muted);font-size:13px;text-align:center;padding:20px 5px}
+.footer{color:var(--muted);font-size:12px;text-align:center;padding:10px 0 0}
+@media(max-width:800px){.grid{grid-template-columns:1fr}.card{padding:16px}.factor-top{display:block}.factor-or{display:inline-block;margin-top:6px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="brand"><div class="logo" aria-hidden="true">🌙</div><div><div class="eyebrow">Pediatric OSA Screening Prototype</div><h1>หลับดีไหมลูก?</h1><p>Lub Dee Mai Look? · เครื่องมือรวบรวมข้อมูลปัจจัยเสี่ยง OSA ในเด็ก</p></div></div>
+  <div class="header-note">ต้นแบบสำหรับสาธิตแนวคิดการคัดกรองและจัดเก็บข้อมูล — ไม่ใช่เครื่องมือวินิจฉัย</div>
+</div></header>
+<main class="wrap">
+  <div class="notice"><strong>ข้อควรทราบด้านความปลอดภัยทางคลินิก</strong>ระบบนี้ยังไม่มีแบบจำลองคะแนนและจุดตัดที่ผ่านการตรวจสอบความถูกต้อง จึงไม่แสดงระดับ Low / Intermediate / High และไม่ให้คำแนะนำการรักษา หากข้อมูลไม่ครบ ระบบจะแสดงสถานะข้อมูลไม่ครบโดยไม่ตีความช่องว่างว่า “ไม่มีปัจจัยเสี่ยง”</div>
+  <div class="grid">
+    <section class="card">
+      <h2>แบบบันทึกการประเมิน</h2><p class="sub">กรอกด้วยข้อมูลสมมติเท่านั้น · ไม่ต้องระบุชื่อ-นามสกุลเด็ก</p>
+      <form id="assessmentForm">
+        <div class="field"><label for="childCode">รหัสเด็ก / Demo ID</label><input id="childCode" type="text" maxlength="24" placeholder="เช่น DEMO-001" required></div>
+        <div class="field"><label for="ageMonths">อายุ (เดือน)</label><input id="ageMonths" type="number" min="0" max="216" step="1" placeholder="เช่น 48" required></div>
+        <h3 style="font-size:16px;margin:20px 0 4px">ปัจจัยเสี่ยงตามแนวคิดโครงการ</h3><p class="sub">เลือกสถานะให้ครบทุกข้อ · “ยังไม่ประเมิน” ไม่เท่ากับ “ไม่มี”</p>
+        <div id="factors"></div>
+        <label class="consent"><input id="demoConsent" type="checkbox" required><span>ยืนยันว่าใช้ข้อมูลสมมติ (Synthetic Demo Data) เท่านั้น และเข้าใจว่าแอปนี้ไม่ใช่เครื่องมือวินิจฉัยหรือให้คำแนะนำการรักษา</span></label>
+        <div class="actions"><button class="primary" type="submit">บันทึกการประเมิน</button><button class="secondary" type="button" id="sampleBtn">เติมตัวอย่าง Demo</button><button class="secondary" type="reset">ล้างแบบฟอร์ม</button></div>
+      </form>
+      <div id="liveResult" class="result incomplete" role="status" aria-live="polite">กรุณาระบุข้อมูลเพื่อดูความครบถ้วนของการประเมิน</div>
+    </section>
+    <aside>
+      <section class="card">
+        <h2>ภาพรวมข้อมูล</h2><p class="sub">บันทึกไว้ในเบราว์เซอร์นี้เท่านั้น</p>
+        <div style="display:flex;gap:18px;align-items:baseline"><div><div id="totalCount" style="font-size:32px;font-weight:800;color:var(--teal)">0</div><div class="meta">รายการทั้งหมด</div></div><div><div id="completeCount" style="font-size:32px;font-weight:800">0</div><div class="meta">ข้อมูลครบ 5 ปัจจัย</div></div></div>
+        <div class="actions"><button class="secondary small" id="exportBtn" type="button">Export JSON</button><button class="danger small" id="clearBtn" type="button">ลบข้อมูลทั้งหมด</button></div>
+      </section>
+      <section class="card">
+        <h2>ประวัติการประเมิน</h2><p class="sub">ข้อมูลตัวอย่างจะไม่ถูกส่งออกจากอุปกรณ์</p>
+        <div id="history" class="list"><div class="empty">ยังไม่มีรายการประเมิน</div></div>
+      </section>
+    </aside>
+  </div>
+  <div class="footer">Lub Dee Mai Look? · Prototype v0.1 · HTML / CSS / JavaScript · Local browser storage</div>
+</main>
+<script>
+const FACTORS = [
+ {id:"tonsil",name:"ต่อมทอนซิลโต (Tonsillar hypertrophy)",or:"OR 3.55",desc:"Johnson et al., 2022"},
+ {id:"family",name:"ประวัติครอบครัวเป็น OSA",or:"OR 3.03",desc:"Szily et al., 2019"},
+ {id:"infection",name:"ประวัติติดเชื้อทางเดินหายใจส่วนล่าง / RSV",or:"OR 2.59",desc:"Gutierrez et al., 2021"},
+ {id:"obesity",name:"โรคอ้วน (Obesity)",or:"OR 1.74",desc:"Andersen et al., 2019"},
+ {id:"adenoid",name:"ต่อมอะดีนอยด์โต (Adenoid hypertrophy)",or:"OR 1.63",desc:"Johnson et al., 2022"}
+];
+const KEY="lubdeemaimailook_demo_assessments_v1";
+const $=id=>document.getElementById(id);
+const safeRead=()=>{try{return JSON.parse(localStorage.getItem(KEY)||"[]")}catch{return []}};
+let records=safeRead();
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function renderFactors(){
+ $("factors").innerHTML=FACTORS.map(f=>`<div class="factor"><div class="factor-top"><div class="factor-name">${f.name}</div><span class="factor-or">${f.or}</span></div><div class="factor-desc">อ้างอิง: ${f.desc} · OR เป็นข้อมูลอ้างอิง ไม่ใช่คะแนน</div><div class="choices" role="radiogroup" aria-label="${f.name}">
+ <label class="choice"><input type="radio" name="${f.id}" value="present"> พบ</label>
+ <label class="choice"><input type="radio" name="${f.id}" value="absent"> ไม่พบ</label>
+ <label class="choice"><input type="radio" name="${f.id}" value="unknown" checked> ยังไม่ประเมิน</label>
+ </div></div>`).join("");
+ $("factors").addEventListener("change",updateLive,{once:false});
+}
+function getFactorValues(){const v={};FACTORS.forEach(f=>{v[f.id]=document.querySelector('input[name="'+f.id+'"]:checked')?.value||"unknown"});return v}
+function getCompleteness(values){return FACTORS.filter(f=>values[f.id]==="present"||values[f.id]==="absent").length}
+function updateLive(){
+ const values=getFactorValues(),done=getCompleteness(values),pct=Math.round(done/FACTORS.length*100),box=$("liveResult");
+ box.className="result "+(done===5?"":"incomplete");
+ box.innerHTML=`<strong>ความครบถ้วนของข้อมูล: ${done}/5 ข้อ (${pct}%)</strong><div class="progress"><span style="width:${pct}%"></span></div>${done===5?"ข้อมูลครบตามรายการปัจจัยที่กำหนด แต่ยังไม่สามารถแปลผลเป็นระดับความเสี่ยงได้ เนื่องจากยังไม่มี scoring model ที่ผ่านการตรวจสอบ":"ข้อมูลยังไม่ครบ ระบบจะไม่สรุปว่าเป็น Low Risk และควรประเมินข้อมูลที่ขาดก่อนการทบทวนโดยบุคลากรทางการแพทย์"}`;
+}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(records));return true}catch(e){alert("ไม่สามารถบันทึกในเบราว์เซอร์ได้ กรุณาตรวจสอบพื้นที่จัดเก็บ");return false}}
+function renderHistory(){
+ $("totalCount").textContent=records.length;
+ $("completeCount").textContent=records.filter(r=>r.completeness===5).length;
+ if(!records.length){$("history").innerHTML='<div class="empty">ยังไม่มีรายการประเมิน</div>';return}
+ $("history").innerHTML=records.slice().reverse().map(r=>{
+ const date=new Date(r.createdAt).toLocaleString("th-TH");
+ const status=r.completeness===5?"ข้อมูลครบ 5/5":"ข้อมูลไม่ครบ "+r.completeness+"/5";
+ return `<div class="record"><div class="record-head"><div><div class="record-title">${escapeHtml(r.childCode)}</div><div class="meta">อายุ ${r.ageMonths} เดือน · ${date}</div></div><span class="tag">${status}</span></div><div class="actions"><button class="secondary small" data-view="${r.id}" type="button">ดูรายละเอียด</button><button class="danger small" data-delete="${r.id}" type="button">ลบ</button></div><div id="detail-${r.id}" class="meta" hidden style="margin-top:8px"></div></div>`
+ }).join("");
+ $("history").querySelectorAll("[data-delete]").forEach(b=>b.addEventListener("click",()=>{if(confirm("ต้องการลบรายการนี้หรือไม่?")){records=records.filter(r=>r.id!==b.dataset.delete);persist();renderHistory()}}));
+ $("history").querySelectorAll("[data-view]").forEach(b=>b.addEventListener("click",()=>{const r=records.find(x=>x.id===b.dataset.view),el=$("detail-"+b.dataset.view);el.hidden=!el.hidden;if(!el.hidden)el.textContent=FACTORS.map(f=>f.name+": "+({present:"พบ",absent:"ไม่พบ",unknown:"ยังไม่ประเมิน"}[r.factors[f.id]])).join(" · ")}));
+}
+$("assessmentForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ if(!$("assessmentForm").reportValidity())return;
+ const values=getFactorValues(),completeness=getCompleteness(values);
+ const r={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),childCode:$("childCode").value.trim(),ageMonths:Number($("ageMonths").value),factors:values,completeness,createdAt:new Date().toISOString(),prototype:true};
+ records.push(r);if(persist()){renderHistory();$("assessmentForm").reset();renderFactors();updateLive();alert("บันทึกข้อมูลตัวอย่างในเบราว์เซอร์นี้แล้ว")}
+});
+$("sampleBtn").addEventListener("click",()=>{
+ $("childCode").value="DEMO-"+String(records.length+1).padStart(3,"0");$("ageMonths").value=48;$("demoConsent").checked=true;
+ const demo={tonsil:"present",family:"absent",infection:"present",obesity:"unknown",adenoid:"present"};
+ FACTORS.forEach(f=>{const el=document.querySelector('input[name="'+f.id+'"][value="'+demo[f.id]+'"]');if(el)el.checked=true});updateLive();
+});
+$("exportBtn").addEventListener("click",()=>{
+ const blob=new Blob([JSON.stringify({project:"Lub Dee Mai Look? Pediatric OSA Screening Prototype",exportedAt:new Date().toISOString(),notice:"Synthetic demo data only. Not a clinical diagnosis.",records},null,2)],{type:"application/json"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="lub-dee-mai-look-demo-data.json";a.click();URL.revokeObjectURL(a.href);
+});
+$("clearBtn").addEventListener("click",()=>{if(confirm("ลบข้อมูลการประเมินทั้งหมดที่บันทึกในเบราว์เซอร์นี้?")){records=[];persist();renderHistory()}});
+$("assessmentForm").addEventListener("change",updateLive);
+renderFactors();renderHistory();updateLive();
+</script>
+</body></html>
