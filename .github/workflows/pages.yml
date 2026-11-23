@@ -23,6 +23,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Generate PWA icon PNGs
+        run: python3 scripts/generate-icons.py
+      - name: Verify PWA assets
+        run: |
+          test -s icons/icon-192.png
+          test -s icons/icon-512.png
+          test -s icons/icon-maskable-512.png
+          test -s icons/apple-touch-icon.png
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
