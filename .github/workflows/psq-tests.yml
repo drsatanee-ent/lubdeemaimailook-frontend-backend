@@ -1,0 +1,21 @@
+name: Test PSQ scoring
+
+on:
+  push:
+    branches: ["main", "feature/thai-srbd-psq-screening"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run built-in scoring unit tests
+        run: node --test tests/psq-scoring.test.cjs
