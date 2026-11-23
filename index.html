@@ -38,8 +38,7 @@ button{border:0;border-radius:10px;padding:11px 15px;font:inherit;font-weight:70
     <section class="card">
       <h2>แบบบันทึกการประเมิน</h2><p class="sub">กรอกด้วยข้อมูลสมมติเท่านั้น · ไม่ต้องระบุชื่อ-นามสกุลเด็ก</p>
       <form id="assessmentForm">
-        <div class="field"><label for="childCode">รหัสเด็ก / Demo ID</label><input id="childCode" type="text" maxlength="24" placeholder="เช่น DEMO-001" required></div>
-        <div class="field"><label for="ageMonths">อายุ (เดือน)</label><input id="ageMonths" type="number" min="0" max="216" step="1" placeholder="เช่น 48" required></div>
+        <div class="field"><label for="ageYears">อายุ (ปี)</label><input id="ageYears" type="number" min="0" max="18" step="0.1" placeholder="เช่น 4 หรือ 4.5" required></div>
         <h3 style="font-size:16px;margin:20px 0 4px">ปัจจัยเสี่ยงตามแนวคิดโครงการ</h3><p class="sub">เลือกสถานะให้ครบทุกข้อ · “ยังไม่ประเมิน” ไม่เท่ากับ “ไม่มี”</p>
         <div id="factors"></div>
         <label class="consent"><input id="demoConsent" type="checkbox" required><span>ยืนยันว่าใช้ข้อมูลสมมติ (Synthetic Demo Data) เท่านั้น และเข้าใจว่าแอปนี้ไม่ใช่เครื่องมือวินิจฉัยหรือให้คำแนะนำการรักษา</span></label>
@@ -98,7 +97,7 @@ function renderHistory(){
  $("history").innerHTML=records.slice().reverse().map(r=>{
  const date=new Date(r.createdAt).toLocaleString("th-TH");
  const status=r.completeness===5?"ข้อมูลครบ 5/5":"ข้อมูลไม่ครบ "+r.completeness+"/5";
- return `<div class="record"><div class="record-head"><div><div class="record-title">${escapeHtml(r.childCode)}</div><div class="meta">อายุ ${r.ageMonths} เดือน · ${date}</div></div><span class="tag">${status}</span></div><div class="actions"><button class="secondary small" data-view="${r.id}" type="button">ดูรายละเอียด</button><button class="danger small" data-delete="${r.id}" type="button">ลบ</button></div><div id="detail-${r.id}" class="meta" hidden style="margin-top:8px"></div></div>`
+ return `<div class="record"><div class="record-head"><div><div class="record-title">การประเมิน</div><div class="meta">อายุ ${Number(r.ageYears ?? (r.ageMonths / 12)).toLocaleString("th-TH",{maximumFractionDigits:2})} ปี · ${date}</div></div><span class="tag">${status}</span></div><div class="actions"><button class="secondary small" data-view="${r.id}" type="button">ดูรายละเอียด</button><button class="danger small" data-delete="${r.id}" type="button">ลบ</button></div><div id="detail-${r.id}" class="meta" hidden style="margin-top:8px"></div></div>`
  }).join("");
  $("history").querySelectorAll("[data-delete]").forEach(b=>b.addEventListener("click",()=>{if(confirm("ต้องการลบรายการนี้หรือไม่?")){records=records.filter(r=>r.id!==b.dataset.delete);persist();renderHistory()}}));
  $("history").querySelectorAll("[data-view]").forEach(b=>b.addEventListener("click",()=>{const r=records.find(x=>x.id===b.dataset.view),el=$("detail-"+b.dataset.view);el.hidden=!el.hidden;if(!el.hidden)el.textContent=FACTORS.map(f=>f.name+": "+({present:"พบ",absent:"ไม่พบ",unknown:"ยังไม่ประเมิน"}[r.factors[f.id]])).join(" · ")}));
@@ -107,11 +106,11 @@ $("assessmentForm").addEventListener("submit",e=>{
  e.preventDefault();
  if(!$("assessmentForm").reportValidity())return;
  const values=getFactorValues(),completeness=getCompleteness(values);
- const r={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),childCode:$("childCode").value.trim(),ageMonths:Number($("ageMonths").value),factors:values,completeness,createdAt:new Date().toISOString(),prototype:true};
+ const r={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),ageYears:Number($("ageYears").value),factors:values,completeness,createdAt:new Date().toISOString(),prototype:true};
  records.push(r);if(persist()){renderHistory();$("assessmentForm").reset();renderFactors();updateLive();alert("บันทึกข้อมูลตัวอย่างในเบราว์เซอร์นี้แล้ว")}
 });
 $("sampleBtn").addEventListener("click",()=>{
- $("childCode").value="DEMO-"+String(records.length+1).padStart(3,"0");$("ageMonths").value=48;$("demoConsent").checked=true;
+ $("ageYears").value=4;$("demoConsent").checked=true;
  const demo={tonsil:"present",family:"absent",infection:"present",obesity:"unknown",adenoid:"present"};
  FACTORS.forEach(f=>{const el=document.querySelector('input[name="'+f.id+'"][value="'+demo[f.id]+'"]');if(el)el.checked=true});updateLive();
 });
