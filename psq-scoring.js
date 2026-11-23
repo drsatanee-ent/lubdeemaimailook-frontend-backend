@@ -1,53 +1,36 @@
 /*
- * Thai SRBD-PSQ scoring utility for a non-clinical demonstration.
- * Source PDF: Thai_SRBD_PSQ_Form.pdf (user-provided, 22 items).
- * PSQ screen-positive cutoff: >= 0.33 as specified in the supplied PDF.
- * IMPORTANT: the 0.20 intermediate boundary is an UNVALIDATED UI
- * demonstration placeholder; it is NOT a clinical threshold.
- */
+ Thai SRBD-PSQ (22 items), binary screening prototype.
+ Source: Thai_SRBD_PSQ_Form.pdf supplied by the user.
+ Cutoff >= 0.33 is described in the supplied form.
+ Neither group is a diagnosis or an OSA severity grade.
+*/
 (function (root, factory) {
-  var scoring = factory();
-  if (typeof module !== "undefined" && module.exports) module.exports = scoring;
-  if (root) root.PSQScoring = scoring;
-})(typeof globalThis !== "undefined" ? globalThis : this, function () {
+  var api=factory();
+  if (typeof module!=="undefined" && module.exports) module.exports=api;
+  if (root) root.PSQScoring=api;
+})(typeof globalThis!=="undefined"?globalThis:this,function(){
   "use strict";
-  var COUNT = 22;
-  var SCREEN_POSITIVE = 0.33;
-  var DEMO_INTERMEDIATE = 0.20; // Never treat as clinically validated.
-
-  function calculate(answers) {
-    if (!Array.isArray(answers) || answers.length !== COUNT) {
-      throw new Error("Expected precisely 22 questionnaire answers");
-    }
-    var yes = 0, no = 0, unknown = 0, pending = 0;
-    answers.forEach(function (answer) {
-      if (answer === "yes") yes++;
-      else if (answer === "no") no++;
-      else if (answer === "unknown") unknown++;
-      else if (answer === null || answer === undefined || answer === "") pending++;
+  var COUNT=22, CUTOFF=0.33;
+  function calculate(answers){
+    if(!Array.isArray(answers)||answers.length!==COUNT) throw new Error("Expected precisely 22 questionnaire answers");
+    var yes=0,no=0,unknown=0,pending=0;
+    answers.forEach(function(a){
+      if(a==="yes") yes++;
+      else if(a==="no") no++;
+      else if(a==="unknown") unknown++;
+      else if(a==null||a==="") pending++;
       else throw new Error("Invalid questionnaire response");
     });
-    var selected = COUNT - pending;
-    var known = yes + no;
-    // The PDF formula is Yes / (22 - Unknown), provided every item
-    // has been explicitly answered yes, no, or unknown.
-    var score = pending === 0 && known > 0 ? yes / (COUNT - unknown) : null;
-    var screen = score === null ? "unavailable" : (score >= SCREEN_POSITIVE ? "positive" : "negative");
-    var demoTier = "unclassified";
-    if (score !== null && unknown === 0) {
-      if (score >= SCREEN_POSITIVE) demoTier = "high";
-      else if (score >= DEMO_INTERMEDIATE) demoTier = "moderate";
-      else demoTier = "low";
-    }
-    var redFlag = answers[3] === "yes" || answers[4] === "yes" || answers[5] === "yes";
-    return {
-      total: COUNT, selected: selected, yes: yes, no: no,
-      unknown: unknown, pending: pending, known: known,
-      score: score, cutoff: SCREEN_POSITIVE,
-      screen: screen, demoTier: demoTier,
-      redFlag: redFlag, demoBoundary: DEMO_INTERMEDIATE
-    };
+    var known=yes+no;
+    // Formula from the supplied form: "yes" / (22 - "don't know").
+    // Incomplete/unanswered forms are not scored.
+    var score=pending===0 && known>0 ? yes/known : null;
+    // Conservative product safeguard: do not assign a low or high category
+    // when "don't know" responses remain. The numeric PSQ score may still
+    // be shown as information for forms with explicitly selected answers.
+    var classification=score===null||unknown>0?"unclassified":(score>=CUTOFF?"high":"low");
+    var screen=score===null?"unavailable":(score>=CUTOFF?"positive":"negative");
+    return {total:COUNT,selected:COUNT-pending,yes:yes,no:no,unknown:unknown,pending:pending,known:known,score:score,cutoff:CUTOFF,classification:classification,screen:screen,redFlag:answers[3]==="yes"||answers[4]==="yes"||answers[5]==="yes"};
   }
-  return { calculate: calculate, COUNT: COUNT, SCREEN_POSITIVE: SCREEN_POSITIVE,
-    DEMO_INTERMEDIATE: DEMO_INTERMEDIATE };
+  return {calculate:calculate,COUNT:COUNT,CUTOFF:CUTOFF};
 });
